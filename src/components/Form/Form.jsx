@@ -5,20 +5,21 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useStyles from "./styles";
 import { createPost, updatePost } from "../../redux/actions/posts";
+import AuthWithGoogle from "../AuthWithGoogle/AuthWithGoogle";
 
-function Form({ currentId, setCurrentId }) {
+function Form({ currentId, setCurrentId, closeDrawer }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const post = useSelector((state) =>
     currentId ? state.posts.find((p) => p._id === currentId) : null
   );
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     message: "",
     tags: "",
     selectedFile: "",
   });
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   useEffect(() => {
     if (post) {
@@ -29,24 +30,29 @@ function Form({ currentId, setCurrentId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentId) {
-      dispatch(updatePost(currentId, postData));
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      );
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
     }
-    clear();
+    // clear();
     // console.log(postData);
   };
 
   const clear = () => {
     setCurrentId(null);
     setPostData({
-      creator: "",
       title: "",
       message: "",
       tags: "",
       selectedFile: "",
     });
   };
+
+  if (!user?.result?.name) {
+    return <AuthWithGoogle />;
+  }
 
   return (
     <div>
@@ -60,16 +66,7 @@ function Form({ currentId, setCurrentId }) {
           <Typography variant="h6">
             {currentId ? `Editing` : `Creating`} a Memories
           </Typography>
-          <TextField
-            name="creator"
-            variant="outlined"
-            label="Creator"
-            fullWidth
-            value={postData.creator}
-            onChange={(e) =>
-              setPostData({ ...postData, creator: e.target.value })
-            }
-          />
+
           <TextField
             name="title"
             variant="outlined"
@@ -118,6 +115,7 @@ function Form({ currentId, setCurrentId }) {
             size="large"
             type="submit"
             fullWidth
+            onClick={closeDrawer}
           >
             Submit
           </Button>

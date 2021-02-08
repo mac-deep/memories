@@ -4,7 +4,7 @@ export default makeStyles({
   media: {
     height: 0,
     paddingTop: "56.25%",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.5s)",
     backgroundBlendMode: "darken",
   },
   border: {
@@ -20,6 +20,8 @@ export default makeStyles({
     borderRadius: "15px",
     height: "100%",
     position: "relative",
+    background: "rgb(254,209,164)",
+    // backdropFilter: "blur(40px)",
   },
   overlay: {
     position: "absolute",
@@ -39,7 +41,10 @@ export default makeStyles({
   details: {
     display: "flex",
     justifyContent: "space-between",
-    margin: "20px",
+    margin: "20px 20px 5px 20px",
+  },
+  message: {
+    padding: "0 20px 20px 20px",
   },
   title: {
     padding: "0 16px",
