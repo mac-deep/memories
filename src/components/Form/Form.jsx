@@ -78,6 +78,7 @@ function Form({ currentId, setCurrentId, closeDrawer }) {
             }
           />
           <TextField
+            multiline
             name="message"
             variant="outlined"
             label="Message"

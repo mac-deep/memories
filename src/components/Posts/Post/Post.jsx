@@ -7,6 +7,8 @@ import {
   CardContent,
   Button,
   Typography,
+  IconButton,
+  Tooltip,
 } from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
@@ -69,17 +71,19 @@ function Post({ post, setCurrentId }) {
       {(user?.result?.googleId === post?.creator ||
         user?.result?._id === post?.creator) && (
         <div className={classes.overlay2}>
-          <Button
-            style={{ color: "white" }}
-            size="small"
-            onClick={() => {
-              dispatch(setCurrentId(post._id));
-              dispatch(open());
-              debugger;
-            }}
-          >
-            <MoreHorizIcon fontSize="default" />
-          </Button>
+          <Tooltip title="edit your post (not working)">
+            <IconButton
+              style={{ color: "white" }}
+              size="small"
+              onClick={() => {
+                dispatch(setCurrentId(post._id));
+                dispatch(open());
+                debugger;
+              }}
+            >
+              <MoreHorizIcon fontSize="default" />
+            </IconButton>
+          </Tooltip>
         </div>
       )}
 
@@ -110,13 +114,15 @@ function Post({ post, setCurrentId }) {
         </Button>
         {(user?.result?.googleId === post?.creator ||
           user?.result?._id === post?.creator) && (
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => dispatch(deletePost(post._id))}
-          >
-            <DeleteIcon fontSize="small" /> Delete
-          </Button>
+          <Tooltip title="Delete this post">
+            <IconButton
+              size="small"
+              color="primary"
+              onClick={() => dispatch(deletePost(post._id))}
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
         )}
       </CardActions>
     </Card>
