@@ -1,57 +1,21 @@
-import React, { useEffect, useState } from "react";
-import {
-  AppBar,
-  Avatar,
-  Button,
-  IconButton,
-  Toolbar,
-  Typography,
-  Tooltip,
-} from "@material-ui/core";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import React from "react";
+import { AppBar, IconButton, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import decode from "jwt-decode";
+import MenuIcon from "@material-ui/icons/Menu";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+
 import useStyles from "./styles";
 import memories from "../../images/memories.png";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Drawer from "@material-ui/core/Drawer";
-import Fab from "@material-ui/core/Fab";
-import MenuIcon from "@material-ui/icons/Menu";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import Form from "../Form/Form";
 import { open } from "../../redux/actions/drawer";
-import { updatePost } from "../../redux/actions/posts";
+import Sidebar from "../Sidebar/Sidebar";
 
-const Navbar = () => {
+const Navbar = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
-  const location = useLocation();
   const drawer = useSelector((state) => state.drawer);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  // console.log(user);
-
-  const [currentId, setCurrentId] = useState(null);
-  // const post = useSelector((state) =>
-  //   currentId ? state.posts.find((p) => p._id === currentId) : null
-  // );
-  useEffect(() => {
-    const token = user?.token;
-
-    if (token) {
-      const decodedToken = decode(token);
-      if (decodedToken.exp * 1000 < new Date().getTime()) {
-        logout();
-      }
-    }
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [currentId, location]);
-
-  const logout = () => {
-    dispatch({ type: "LOGOUT" });
-    history.push("/");
-    setUser(null);
-  };
+  const matches = useMediaQuery("(max-width:600px)");
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
@@ -60,7 +24,7 @@ const Navbar = () => {
           component={Link}
           to="/"
           className={classes.heading}
-          variant="h2"
+          variant={matches ? "h4" : "h2"}
           align="center"
         >
           Memories
@@ -69,84 +33,18 @@ const Navbar = () => {
           className={classes.image}
           src={memories}
           alt="memories"
-          height="70px"
+          height={matches ? "50px" : "70px"}
         />
       </div>
-      {/* <DrawerButton /> */}
-      <IconButton size="medium">
-        <MenuIcon style={{ color: "white" }} onClick={() => dispatch(open())} />
+      <IconButton size="medium" onClick={() => dispatch(open())}>
+        <MenuIcon style={{ color: "white" }} />
       </IconButton>
 
-      <Drawer anchor="right" open={drawer}>
-        <div className={classes.list}>
-          <div className={classes.buttons}>
-            <IconButton color="primary">
-              <ArrowForwardIosIcon onClick={() => dispatch(open())} />
-            </IconButton>
-            <div className={classes.profile}>
-              <Avatar
-                className={classes.avatarLarge}
-                src={user?.result.imageUrl}
-              />
-              <Typography variant="h5">{user?.result.name}</Typography>
-            </div>
-            {/* {user && ( */}
-            <Tooltip title="LogOut">
-              <IconButton
-                disabled={!user}
-                variant="contained"
-                className={classes.logout}
-                color="secondary"
-                onClick={logout}
-              >
-                <ExitToAppIcon />
-              </IconButton>
-            </Tooltip>
-            {/* )} */}
-          </div>
-          <Form
-            closeDrawer={() => dispatch(open())}
-            currentId={currentId}
-            setCurrentId={setCurrentId}
-          />
-        </div>
+      <Drawer anchor="right" open={drawer} className={classes.drawer}>
+        <Sidebar currentId={currentId} setCurrentId={setCurrentId} />
       </Drawer>
     </AppBar>
   );
 };
 
 export default Navbar;
-
-/* <Toolbar className={classes.toolbar}>
-  {user ? (
-    <div className={classes.profile}>
-      <Avatar
-        className={classes.purple}
-        alt={user.result.name}
-        src={user.result.imageUrl}
-      >
-        {user.result.name.charAt(0)}
-      </Avatar>
-      <Typography className={classes.userName} variant="h6">
-        {user.result.name}
-      </Typography>
-      <Button
-        variant="contained"
-        className={classes.logout}
-        color="secondary"
-        onClick={logout}
-      >
-        Logout
-      </Button>
-    </div>
-  ) : (
-    <Button
-      component={Link}
-      to="/auth"
-      variant="contained"
-      color="primary"
-    >
-      Sign In
-    </Button>
-  )}
-</Toolbar> */

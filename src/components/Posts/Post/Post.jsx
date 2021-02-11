@@ -1,28 +1,20 @@
 import React from "react";
-import useStyles from "./styles";
-import {
-  Card,
-  CardMedia,
-  CardActions,
-  CardContent,
-  Button,
-  Typography,
-  IconButton,
-  Tooltip,
-} from "@material-ui/core";
+import moment from "moment";
+import { useDispatch } from "react-redux";
+import { Card, CardMedia, CardActions, CardContent } from "@material-ui/core";
+import { Button, Typography, IconButton, Tooltip } from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import moment from "moment";
-import { useDispatch, useSelector } from "react-redux";
+
+import useStyles from "./styles.jsx";
 import { deletePost, likePost } from "../../../redux/actions/posts";
 import { open } from "../../../redux/actions/drawer";
 
 function Post({ post, setCurrentId }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const currentId = useSelector((state) => state.currentId);
   const user = JSON.parse(localStorage.getItem("profile"));
 
   const Likes = () => {
@@ -53,6 +45,11 @@ function Post({ post, setCurrentId }) {
     );
   };
 
+  const editPost = () => {
+    dispatch(open());
+    setCurrentId(post._id);
+  };
+
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -71,15 +68,11 @@ function Post({ post, setCurrentId }) {
       {(user?.result?.googleId === post?.creator ||
         user?.result?._id === post?.creator) && (
         <div className={classes.overlay2}>
-          <Tooltip title="edit your post (not working)">
+          <Tooltip title="Edit">
             <IconButton
               style={{ color: "white" }}
               size="small"
-              onClick={() => {
-                dispatch(setCurrentId(post._id));
-                dispatch(open());
-                debugger;
-              }}
+              onClick={() => editPost()}
             >
               <MoreHorizIcon fontSize="default" />
             </IconButton>
@@ -114,7 +107,7 @@ function Post({ post, setCurrentId }) {
         </Button>
         {(user?.result?.googleId === post?.creator ||
           user?.result?._id === post?.creator) && (
-          <Tooltip title="Delete this post">
+          <Tooltip title="Delete">
             <IconButton
               size="small"
               color="primary"

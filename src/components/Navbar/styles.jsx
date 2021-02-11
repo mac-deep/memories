@@ -51,14 +51,12 @@ export default makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    // textAlign: "center",
     fontSize: "24px",
     fontWeight: "600",
   },
-  list: {
-    height: "100vh",
-    backgroundColor: "rgba(253,163,75, 0.5)",
-    width: 400,
+  drawer: {
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backdropFilter: "blur(10px)",
   },
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),

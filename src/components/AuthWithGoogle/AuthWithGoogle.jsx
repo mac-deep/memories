@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Typography, Paper } from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
@@ -38,7 +38,7 @@ const AuthWithGoogle = () => {
           <Button
             className={classes.googleButton}
             color="primary"
-            fullWidth
+            // fullWidth
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
             startIcon={<Icon />}

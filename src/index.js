@@ -8,14 +8,17 @@ import "./index.css";
 import App from "./App.js";
 import reducers from "./redux/reducers";
 
-const store = createStore(
-  reducers,
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-  compose(
-    applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
+// const store = createStore(
+//   reducers,
+//   compose(
+//     applyMiddleware(thunk),
+//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+//   )
+// );
+
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDom.render(
   <Provider store={store}>

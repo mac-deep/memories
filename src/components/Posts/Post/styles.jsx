@@ -4,7 +4,7 @@ export default makeStyles({
   media: {
     height: 0,
     paddingTop: "56.25%",
-    backgroundColor: "rgba(0, 0, 0, 0.5s)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     backgroundBlendMode: "darken",
   },
   border: {
@@ -15,13 +15,13 @@ export default makeStyles({
   },
   card: {
     display: "flex",
+    flexGrow: "1",
     flexDirection: "column",
     justifyContent: "space-between",
     borderRadius: "15px",
     height: "100%",
     position: "relative",
-    background: "rgb(254,209,164)",
-    // backdropFilter: "blur(40px)",
+    backgroundImage: "linear-gradient(to top, #2af598 0%, #ffffff 100%)",
   },
   overlay: {
     position: "absolute",

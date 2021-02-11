@@ -13,17 +13,4 @@ export default makeStyles((theme) => ({
     justifyContent: "center",
     backgroundColor: "transparent",
   },
-
-  //   form: {
-  //     display: "flex",
-  //     flexWrap: "wrap",
-  //     justifyContent: "center",
-  //   },
-  //   fileInput: {
-  //     width: "97%",
-  //     margin: "10px 0",
-  //   },
-  //   buttonSubmit: {
-  //     marginBottom: 10,
-  //   },
 }));

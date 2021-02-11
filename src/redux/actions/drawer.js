@@ -1,13 +1,5 @@
-import { OPEN, CURRENT_ID } from "../constants/actionTypes";
+import { OPEN } from "../constants/actionTypes";
 
-export const open = () => {
-  return {
-    type: OPEN,
-  };
-};
-
-export const currentId = () => {
-  return {
-    type: CURRENT_ID,
-  };
+export const open = () => async (dispatch) => {
+  dispatch({ type: OPEN });
 };
