@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
+import { TextField, Button, Typography, Grid } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
-import Slide from "@material-ui/core/Slide";
 import useStyles from "./styles";
 import { createPost, updatePost } from "../../redux/actions/posts";
 import AuthWithGoogle from "../AuthWithGoogle/AuthWithGoogle";
@@ -71,6 +70,7 @@ function Form({ currentId, setCurrentId, closeDrawer }) {
           variant="outlined"
           label="Title"
           fullWidth
+          inputProps={{ maxLength: 50 }}
           value={postData.title}
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
         />
@@ -80,6 +80,7 @@ function Form({ currentId, setCurrentId, closeDrawer }) {
           variant="outlined"
           label="Message"
           fullWidth
+          inputProps={{ maxLength: 200 }}
           value={postData.message}
           onChange={(e) =>
             setPostData({ ...postData, message: e.target.value })
@@ -90,6 +91,7 @@ function Form({ currentId, setCurrentId, closeDrawer }) {
           variant="outlined"
           label="Tags"
           fullWidth
+          inputProps={{ maxLength: 50 }}
           helperText="Separate tags by comma"
           placeholder="apple,banana,cherry"
           value={postData.tags}
@@ -121,6 +123,7 @@ function Form({ currentId, setCurrentId, closeDrawer }) {
           variant="contained"
           color="secondary"
           size="small"
+          // size="small"
           onClick={clear}
           fullWidth
         >
